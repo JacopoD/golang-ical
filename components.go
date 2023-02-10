@@ -103,6 +103,7 @@ const (
 
 var (
 	timeStampVariations = regexp.MustCompile("^([0-9]{8})?([TZ])?([0-9]{6})?(Z)?$")
+	lastForwardSlash    = regexp.MustCompile("([^\\/]+$)")
 )
 
 func (event *VEvent) SetCreatedTime(t time.Time, props ...PropertyParameter) {
@@ -679,6 +680,13 @@ func ParseComponent(cs *CalendarStream, startLine *BaseProperty) (ComponentBase,
 			if co != nil {
 				cb.Components = append(cb.Components, co)
 			}
+		case "SUMMARY":
+			(*line).Value = strings.TrimSpace((*line).Value)
+			cb.Properties = append(cb.Properties, IANAProperty{*line})
+		case "URL":
+			// lastForwardSlash
+			(*line).Value = lastForwardSlash.FindString((*line).Value)
+			cb.Properties = append(cb.Properties, IANAProperty{*line})
 		default: // TODO put in all the supported types for type switching etc.
 			cb.Properties = append(cb.Properties, IANAProperty{*line})
 		}
