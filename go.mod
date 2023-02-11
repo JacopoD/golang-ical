@@ -1,4 +1,4 @@
-module github.com/JacopoD/golang-ical
+module github.com/arran4/golang-ical
 
 go 1.13
 
@@ -11,4 +11,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
 
-replace github.com/arran4/golang-ical => github.com/JacopoD/golang-ical v0.0.0-20230210232535-8a5798e14ed2
+// replace github.com/arran4/golang-ical => github.com/JacopoD/golang-ical v0.0.0-20230210232535-8a5798e14ed2
