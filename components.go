@@ -103,7 +103,8 @@ const (
 
 var (
 	timeStampVariations = regexp.MustCompile("^([0-9]{8})?([TZ])?([0-9]{6})?(Z)?$")
-	lastForwardSlash    = regexp.MustCompile("([^\\/]+$)")
+	lastForwardSlash    = regexp.MustCompile(`([^\/]+$)`)
+	simpleChars         = regexp.MustCompile(`[^a-zA-Z0-9,\-_: ]+`)
 )
 
 func (event *VEvent) SetCreatedTime(t time.Time, props ...PropertyParameter) {
@@ -682,6 +683,7 @@ func ParseComponent(cs *CalendarStream, startLine *BaseProperty) (ComponentBase,
 			}
 		case "SUMMARY":
 			(*line).Value = strings.TrimSpace((*line).Value)
+			(*line).Value = simpleChars.ReplaceAllString((*line).Value, "")
 			cb.Properties = append(cb.Properties, IANAProperty{*line})
 		case "URL":
 			// lastForwardSlash
