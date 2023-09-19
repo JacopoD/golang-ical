@@ -103,8 +103,9 @@ const (
 
 var (
 	timeStampVariations = regexp.MustCompile("^([0-9]{8})?([TZ])?([0-9]{6})?(Z)?$")
-	lastForwardSlash    = regexp.MustCompile(`([^\/]+$)`)
-	simpleChars         = regexp.MustCompile(`[^a-zA-Z0-9,\-_: ]+`)
+	// lastForwardSlash    = regexp.MustCompile(`([^\/]+$)`)
+	lastForwardSlash = regexp.MustCompile(`^(?:[^\/]*\/){5}([^\/]+)`)
+	simpleChars      = regexp.MustCompile(`[^a-zA-Z0-9,\-_: ]+`)
 )
 
 func (event *VEvent) SetCreatedTime(t time.Time, props ...PropertyParameter) {
