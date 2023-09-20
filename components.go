@@ -688,7 +688,13 @@ func ParseComponent(cs *CalendarStream, startLine *BaseProperty) (ComponentBase,
 			cb.Properties = append(cb.Properties, IANAProperty{*line})
 		case "URL":
 			// lastForwardSlash
-			(*line).Value = lastForwardSlash.FindString((*line).Value)
+			// (*line).Value = lastForwardSlash.FindString((*line).Value)
+			splits := strings.Split((*line).Value, "/")
+			if len(splits) >= 5 {
+				(*line).Value = splits[5]
+			} else {
+				return cb, err
+			}
 			cb.Properties = append(cb.Properties, IANAProperty{*line})
 		default: // TODO put in all the supported types for type switching etc.
 			cb.Properties = append(cb.Properties, IANAProperty{*line})
